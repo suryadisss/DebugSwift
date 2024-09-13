@@ -202,7 +202,7 @@ extension [NetworkViewControllerDetail.Config] {
             ),
             .init(
                 title: "REQUEST",
-                description: model.requestData?.formattedString() ?? "No data"
+                description: "\(NSString(data: model.requestData ?? Data(), encoding: String.Encoding.utf8.rawValue))"
             ),
             .init(
                 title: "RESPONSE HEADER",
