@@ -22,7 +22,7 @@ final class HttpDatasource {
             for urlString in DebugSwift.Network.onlyURLs {
                 if model.url?.absoluteString.lowercased().contains(
                     urlString.lowercased()
-                ) == false {
+                )  == false  || model.url?.absoluteString.contains("Customer/SaveStep1D") == true {
                     return false
                 }
             }
