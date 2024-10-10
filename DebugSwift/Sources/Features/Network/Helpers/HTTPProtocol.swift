@@ -134,11 +134,44 @@ final class CustomHTTPProtocol: URLProtocol {
         model.mineType = response?.mimeType
 
         if let requestBody = request.httpBody {
-            model.requestData = requestBody
+         //   model.requestData = requestBody
+         
         }
 
-        if let requestBodyStream = request.httpBodyStream {
-            model.requestData = requestBodyStream.toData()
+        if let httpBodyStream = request.httpBodyStream {
+          
+            DispatchQueue.global(qos: .background).async {
+                    // Prepare a buffer for reading
+                    let bufferSize = 1024
+                    var buffer = Data(capacity: bufferSize)
+
+                    // Open the stream
+                    httpBodyStream.open()
+
+                    // Read from the stream
+                    while httpBodyStream.hasBytesAvailable {
+                        var tempBuffer = [UInt8](repeating: 0, count: bufferSize)
+                        let bytesRead = httpBodyStream.read(&tempBuffer, maxLength: bufferSize)
+
+                        if bytesRead > 0 {
+                            buffer.append(contentsOf: tempBuffer[0..<bytesRead])
+                        } else {
+                            break
+                        }
+                    }
+
+                    // Close the stream
+                    httpBodyStream.close()
+
+                    // Convert the Data to a String for printing
+                    DispatchQueue.main.async {
+                        if let bodyString = String(data: buffer, encoding: .utf8) {
+                            print("HTTP Body: \(bodyString)")
+                        } else {
+                            print("Failed to convert body data to string.")
+                        }
+                    }
+                }
         }
 
         if let httpResponse = response {
