@@ -139,12 +139,11 @@ final class CustomHTTPProtocol: URLProtocol {
         }
 
         if let httpBodyStream = request.httpBodyStream {
-          
-            model.requestData = requestBodyStream.toData()
+            //model.requestData = requestBodyStream.toData()
         }
 
         if let httpResponse = response {
-            model.statusCode = "\(httpResponse.statusCode)"
+            //model.statusCode = "\(httpResponse.statusCode)"
         }
 
         model.responseData = data
