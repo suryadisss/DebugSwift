@@ -134,7 +134,7 @@ final class CustomHTTPProtocol: URLProtocol {
         model.mineType = response?.mimeType
 
         if let requestBody = request.httpBody {
-        model.requestData = requestBody
+            //model.requestData = requestBody
          
         }
 
@@ -143,7 +143,7 @@ final class CustomHTTPProtocol: URLProtocol {
         }
 
         if let httpResponse = response {
-            //model.statusCode = "\(httpResponse.statusCode)"
+            model.statusCode = "\(httpResponse.statusCode)"
         }
 
         model.responseData = data
